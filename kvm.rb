@@ -5,19 +5,12 @@ class Kvm < Formula
   version "1.0.0-beta3"
   url "https://github.com/aspnet/Home.git", :tag => 'v1.0.0-beta3'
 
-  head "https://github.com/aspnet/Home.git", :branch => 'dev'
-
   depends_on "mono" => :recommended
 
   def install
-    libexec.install "kvm.sh"
-    (libexec + "kvm.sh").chmod 0755
-    (libexec + "mono").make_symlink Formula["mono"].opt_bin/"mono"
-    system "bash -c 'source #{libexec}/kvm.sh; kvm upgrade'"
-    bin.install_symlink "#{libexec}/kvm.sh"
-    bin.install_symlink "#{libexec}/current/k"
-    bin.install_symlink "#{libexec}/current/klr"
-    bin.install_symlink "#{libexec}/current/kpm"
+    chmod 0755, "kvminstall.sh"
+    system './kvminstall.sh'
+    system 'source kvm.sh; kvm upgrade'
   end
 
   def caveats; <<-EOS.undent
